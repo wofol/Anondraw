@@ -73,7 +73,7 @@ Anondraw.prototype.createSideMenu = function createSideMenu () {
 		{
 			icon: "github",
 			text: "Github",
-			href: "javascript:window.open('https://github.com/Squarific/anondraw');ga('send', 'event', 'githubmain', 'open');;",
+			href: "javascript:window.open('https://github.com/Squarific/anondraw');",
 		},
 		{
 			icon: "trophy",
@@ -96,8 +96,8 @@ Anondraw.prototype.createRouter = function createRouter () {
 	this.router
 	.on('/collab*', function () {	
 		this.initCollab();
-		ga('set', 'page', '/collab');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/collab');
+		//ga('send', 'pageview');
 		this.setContent(this.collabContainer);
 		this.collab.createAccountWindow(); // Dirty quick fix for syncing account status
 		if (this.collab.network.socket) this.collab.network.socket.emit("uKey", this.account.uKey);
@@ -106,8 +106,8 @@ Anondraw.prototype.createRouter = function createRouter () {
 	}.bind(this))
 	.on('/messages/:id/:username', function (params) {
 		this.setContent(this.createMessagePage(params));
-		ga('set', 'page', '/messages/send');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/messages/send');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/messages*', function () {
 		this.setContent(document.createTextNode("Loading..."));	
@@ -120,98 +120,98 @@ Anondraw.prototype.createRouter = function createRouter () {
 			this.router.navigate("/login");
 		}.bind(this));
 		
-		ga('set', 'page', '/messages');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/messages');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/feed*', function () {
 		this.setContent(document.createTextNode("Feed"));
-		ga('set', 'page', '/feed');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/feed');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/login*', function () {
 		this.setContent(document.createTextNode("Loading..."));	
 		this.account.checkLogin(function (err, loggedIn) {
 			if (loggedIn) {
-				ga('set', 'page', '/alreadyLoggedIn');
-				ga('send', 'pageview');
+				//ga('set', 'page', '/alreadyLoggedIn');
+				//ga('send', 'pageview');
 				this.router.navigate("/collab");
 				return;
 			}
 			
 			this.setContent(this.createLoginPage());
 		}.bind(this));
-		ga('set', 'page', '/login');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/login');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/forgot*', function () {
 		this.setContent(document.createTextNode("Loading..."));	
 		this.account.checkLogin(function (err, loggedIn) {
 			if (loggedIn) {
-				ga('set', 'page', '/alreadyLoggedIn');
-				ga('send', 'pageview');
+				//ga('set', 'page', '/alreadyLoggedIn');
+				//ga('send', 'pageview');
 				this.router.navigate("/collab");
 				return;
 			}
 			
 			this.setContent(this.createForgotPage());
 		}.bind(this));
-		ga('set', 'page', '/forgot');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/forgot');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/reset*', function () {
 		this.setContent(document.createTextNode("Loading..."));	
 		this.account.checkLogin(function (err, loggedIn) {
 			if (loggedIn) {
-				ga('set', 'page', '/alreadyLoggedIn');
-				ga('send', 'pageview');
+				//ga('set', 'page', '/alreadyLoggedIn');
+				//ga('send', 'pageview');
 				this.router.navigate("/collab");
 				return;
 			}
 			
 			this.setContent(this.createResetPage());
 		}.bind(this));
-		ga('set', 'page', '/reset');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/reset');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/register*', function () {
 		this.setContent(document.createTextNode("Loading..."));	
 		this.account.checkLogin(function (err, loggedIn) {
 			if (loggedIn) {
-				ga('set', 'page', '/alreadyLoggedIn');
-				ga('send', 'pageview');
+				//ga('set', 'page', '/alreadyLoggedIn');
+				//ga('send', 'pageview');
 				this.router.navigate("/collab");
 				return;
 			}
 			
 			this.setContent(this.createRegisterPage());
-			ga('set', 'page', '/register');
-			ga('send', 'pageview');
+			//ga('set', 'page', '/register');
+			//ga('send', 'pageview');
 		}.bind(this));
 	}.bind(this))
 	.on('/logout', function () {
 		this.setContent(this.createLogoutPage());
-			ga('set', 'page', '/logout');
-			ga('send', 'pageview');
+			//ga('set', 'page', '/logout');
+			//ga('send', 'pageview');
 	}.bind(this))
 	.on('/settings*', function () {
 		this.setContent(document.createTextNode("Settings"));
-		ga('set', 'page', '/settings');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/settings');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/faq*', function () {
 		this.setContent(this.createFaqPage());
-		ga('set', 'page', '/faq');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/faq');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/gallery*', function () {
 		this.setContent(this.createPublicFeed());
-		ga('set', 'page', '/gallery');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/gallery');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/profile/:id', function (params) {
 		this.setContent(this.createProfilePage(params.id));
-		ga('set', 'page', '/profile');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/profile');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/profile*', function () {
 		this.setContent(document.createTextNode("Loading..."));	
@@ -224,28 +224,28 @@ Anondraw.prototype.createRouter = function createRouter () {
 			this.router.navigate("/login");
 		}.bind(this));
 		
-		ga('set', 'page', '/myprofile');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/myprofile');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/new*', function () {
 		this.router.navigate("/collab");
-		ga('set', 'page', '/new');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/new');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/contest*', function () {
 		this.setContent(this.createContestFeed());
-		ga('set', 'page', '/contest');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/contest');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/vote*', function () {
 		this.setContent(this.createVotePage());
-		ga('set', 'page', '/vote');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/vote');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on('/allentries/:month/:year', function (params) {
 		this.setContent(this.createAllEntriesPage(params));
-		ga('set', 'page', '/allentries');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/allentries');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.on(function () {
 		/* If there is a hash, go to the collab app for legacy support */
@@ -257,14 +257,14 @@ Anondraw.prototype.createRouter = function createRouter () {
 		if (false) this.router.navigate("/feed");
 		else this.setContent(this.createHome());
 		
-		ga('set', 'page', '/');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/');
+		//ga('send', 'pageview');
 	}.bind(this))
 	.notFound(function (query) {
 		console.log(query);
 		this.setContent(document.createTextNode("This page does not seem to exist. Did you type it wrong? If not, contact info@anondraw.com"));
-		ga('set', 'page', '/notfound');
-		ga('send', 'pageview');
+		//ga('set', 'page', '/notfound');
+		//ga('send', 'pageview');
 	}.bind(this));
 	
 	this.router.updatePageLinks();

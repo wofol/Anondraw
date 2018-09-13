@@ -60,7 +60,7 @@ Anondraw.prototype.createLoginPage = function createLoginPage () {
 			if (err) {
 				error.appendChild(document.createTextNode(err));
 				accountForm.classList.remove("disabled");
-				ga("send", "event", "error", "login");
+				//ga("send", "event", "error", "login");
 				return;
 			}
 			
@@ -138,12 +138,12 @@ Anondraw.prototype.createRegisterPage = function createRegisterPage () {
 			if (err) {
 				error.appendChild(document.createTextNode(err));
 				accountForm.classList.remove("disabled");
-				ga("send", "event", "error", "register");
+				//ga("send", "event", "error", "register");
 				return;
 			}
 			
-			goog_report_register();
-			ga("send", "event", "conversion", "register");
+			//goog_report_register();
+			//ga("send", "event", "conversion", "register");
 			
 			this.router.navigate("/new");
 		}.bind(this));
@@ -247,7 +247,7 @@ Anondraw.prototype.createForgotPage = function createForgotPage () {
 			if (err) {
 				error.appendChild(document.createTextNode(err));
 				accountForm.classList.remove("disabled");
-				ga("send", "event", "error", "forgot");
+				//ga("send", "event", "error", "forgot");
 				return;
 			}
 			
@@ -324,7 +324,7 @@ Anondraw.prototype.createResetPage = function createResetPage () {
 			if (err) {
 				error.appendChild(document.createTextNode(err));
 				accountForm.classList.remove("disabled");
-				ga("send", "event", "error", "reset");
+				//ga("send", "event", "error", "reset");
 				return;
 			}
 			

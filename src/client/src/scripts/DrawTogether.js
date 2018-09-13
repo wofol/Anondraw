@@ -63,14 +63,10 @@ function DrawTogether (container, settings, emotesHash, account, router, pms) {
 	} else if (this.settings.mode == "join") {
 		if (this.settings.room.indexOf("private_") == 0) {
 			if (this.settings.room.indexOf("private_game_") == 0) {
-				ga("send", "event", "autojoin", "privategame");
 			} else {
-				ga("send", "event", "autojoin", "private");
 			}
 		} else if (this.settings.room.indexOf("game_")) {
-			ga("send", "event", "autojoin", "game");
 		} else {
-			ga("send", "event", "autojoin", "public");
 		}
 		this.changeRoom(this.settings.room,
 		                undefined,
@@ -654,7 +650,6 @@ DrawTogether.prototype.bindSocketHandlers = function bindSocketHandlers () {
 
 		if (self.memberlevel > 0 && !localStorage.getItem("buyreported")) {
 			goog_report_buy();
-			ga("send", "event", "conversion", "buypremium");
 			localStorage.setItem("buyreported", true);
 		}
 	});
@@ -846,7 +841,6 @@ DrawTogether.prototype.changeRoom = function changeRoom (room, number, x, y, spe
 };
 
 DrawTogether.prototype.joinGame = function joinGame () {
-	ga("send", "event", "modeselector", "publicgame");
 	this.network.joinGame(this.controls.byName.name.input.value == "Uberlord", function (err, room, drawings) {
 		if (err && err.indexOf("Too many users") !== -1) {
 			this.chat.addMessage("Couldn't join gameroom, too many users.");
@@ -883,7 +877,6 @@ DrawTogether.prototype.joinGame = function joinGame () {
 };
 
 DrawTogether.prototype.createPrivateGame = function createPrivateGame () {
-	ga("send", "event", "modeselector", "newprivategame");
 	this.changeRoom("private_game_" + Math.random().toString(36).substr(2, 5));
 };
 
@@ -1036,17 +1029,14 @@ DrawTogether.prototype.setRoom = function setRoom (room) {
 
 DrawTogether.prototype.openSettingsWindow = function openSettingsWindow () {
 	this.settingsWindow.style.display = "block";
-	ga("send", "event", "openwindow", "settings");
 };
 
 DrawTogether.prototype.openChatFilterWindow = function openChatFilterWindow () {
 	this.chatFilterOptions.style.display = "block";
-	ga("send", "event", "openwindow", "chatFilter");
 };
 
 DrawTogether.prototype.openShareWindow = function openShareWindow () {
 	this.shareWindow.style.display = "block";
-	ga("send", "event", "openwindow", "share");
 
 	this.preview.width = this.shareWindow.offsetWidth * 0.9;
 	this.preview.height = this.preview.width * (this.paint.public.canvas.height / this.paint.public.canvas.width);
@@ -1058,14 +1048,12 @@ DrawTogether.prototype.openShareWindow = function openShareWindow () {
 
 DrawTogether.prototype.openExplainShareWindow = function openExplainShareWindow () {
 	this.shareWindow.style.display = "block";
-	ga("send", "event", "openwindow", "explainshare");
 
 	
 };
 
 DrawTogether.prototype.openRoomWindow = function openRoomWindow () {
 	this.roomWindow.style.display = "block";
-	ga("send", "event", "openwindow", "rooms");
 
 	this.network.getRooms(function (err, rooms) {
 		while (this.publicRoomsContainer.firstChild)
@@ -1087,7 +1075,6 @@ DrawTogether.prototype.openRoomWindow = function openRoomWindow () {
 
 DrawTogether.prototype.openAccountWindow = function openAccountWindow () {
 	this.accWindow.style.display = "block";
-	ga("send", "event", "openwindow", "account");
 };
 
 DrawTogether.prototype.openModeSelector = function openModeSelector () {
@@ -1760,7 +1747,6 @@ DrawTogether.prototype.toggleClickableArea = function toggleClickableArea () {
 DrawTogether.prototype.toggleFullscreen = function toggleFullscreen () {
 	this.paint.container.classList.toggle("fullscreen");
 	this.paint.resize();
-	ga("send", "event", "fullscreen", "toggle");
 };
 
 DrawTogether.prototype.openTilesMap = function openTilesMap () {
@@ -3344,7 +3330,6 @@ DrawTogether.prototype.enterTheContest = function (from, to) {
 	img.src = imageBase64;
 	img.alt = "Exported image";
 	
-	ga("send", "event", "openwindow", "enterTheContest");
 	
 	var exportwindow = this.gui.createWindow({ title: "Enter the monthly contest" });
 	exportwindow.classList.add("contestwindow");
@@ -3414,7 +3399,6 @@ DrawTogether.prototype.exportImage = function (from, to) {
 	img.alt = "Exported image";
 	
 	
-	ga("send", "event", "openwindow", "exportImageShare");
 	
 	var exportwindow = this.gui.createWindow({ title: "Share image to feed" });
 	exportwindow.classList.add("exportwindow");
@@ -4664,7 +4648,6 @@ DrawTogether.prototype.formRegister = function formRegister () {
 		}
 
 		goog_report_register();
-		ga("send", "event", "conversion", "register");
 		this.network.socket.emit("uKey", this.account.uKey);
 		this.createAccountWindow();
 		this.getFavorites();
@@ -4823,9 +4806,7 @@ DrawTogether.prototype.createModeSelector = function createModeSelector () {
 	publicButton.innerHTML = '<img src="images/multi.png"/><br/>Draw with everyone';
 	publicButton.addEventListener("click", function () {
 		this.changeRoom("main");
-		ga("send", "event", "modeselector", "strangers");
 		this.selectWindow.style.display = "";
-		goog_report_join();
 	}.bind(this));
 
 	var privateButton = buttonContainer.appendChild(document.createElement("div"));
@@ -4834,9 +4815,7 @@ DrawTogether.prototype.createModeSelector = function createModeSelector () {
 	privateButton.addEventListener("click", function () {
 		this.settings.room = "private_" + Math.random().toString(36).substr(2, 5); // Random 5 letter room
 		this.changeRoom(this.settings.room, undefined, 0, 0, true);
-		ga("send", "event", "modeselector", "private");
 		this.selectWindow.style.display = "";
-		goog_report_join();
 	}.bind(this));
 
 	/*var privateButton = buttonContainer.appendChild(document.createElement("div"));
@@ -4844,9 +4823,7 @@ DrawTogether.prototype.createModeSelector = function createModeSelector () {
 	privateButton.innerHTML = '<img src="images/member.png"/><br/>Members only room';
 	privateButton.addEventListener("click", function () {
 		this.changeRoom("member_main");
-		ga("send", "event", "modeselector", "member");
 		this.selectWindow.style.display = "";
-		goog_report_join();
 	}.bind(this));*/
 
 	var gameButton = buttonContainer.appendChild(document.createElement("div"));
@@ -4858,9 +4835,7 @@ DrawTogether.prototype.createModeSelector = function createModeSelector () {
 			else if (whom == "Join strangers") this.joinGame();
 			else if (whom == "Create private room") this.createPrivateGame();
 		}.bind(this));
-		ga("send", "event", "modeselector", "game");
 		this.selectWindow.style.display = "";
-		goog_report_join();
 	}.bind(this));
 };
 
@@ -4962,13 +4937,11 @@ DrawTogether.prototype.openDiscordWindow = function openDiscordWindow () {
 
 DrawTogether.prototype.openGithub = function openGithub () {
 	window.open("https://github.com/Squarific/anondraw");
-	ga('send', 'event', 'githubcollab', 'open');
 };
 
 DrawTogether.prototype.openScuttlersWindow = function openScuttlersWindow () {
 	var scuttlersWindow = this.gui.createWindow({ title: "Scuttlers trailer"});
 	
-	ga("send", "event", "window", "scuttlers");
 	
 	var content = scuttlersWindow.appendChild(document.createElement("div"));
 	content.className = "content";
@@ -4994,7 +4967,6 @@ DrawTogether.prototype.openScuttlersWindow = function openScuttlersWindow () {
 DrawTogether.prototype.openScuttlersDateWindow = function openScuttlersDateWindow () {
 	var scuttlersWindow = this.gui.createWindow({ title: "Scuttlers release announcement"});
 	
-	ga("send", "event", "window", "scuttlersannouncement");
 	
 	var content = scuttlersWindow.appendChild(document.createElement("div"));
 	content.className = "content";
@@ -5025,7 +4997,6 @@ DrawTogether.prototype.openScuttlersDateWindow = function openScuttlersDateWindo
 DrawTogether.prototype.openBountyWindow = function openBountyWindow () {
 	var scuttlersWindow = this.gui.createWindow({ title: "New way to support us"});
 	
-	ga("send", "event", "window", "bounty");
 	
 	var content = scuttlersWindow.appendChild(document.createElement("div"));
 	content.className = "content";
@@ -5414,14 +5385,11 @@ DrawTogether.prototype.openWelcomeWindow = function openWelcomeWindow () {
 		introJs()
 		.setOptions({ 'tooltipPosition': 'auto', 'showProgress': true, 'hideNext': true, 'exitOnOverlayClick': false, 'exitOnEsc': false})
 		.onchange(function () {
-			ga("send", "event", "tutorial", "next");
 		})
 		.onexit(function () {
-			ga("send", "event", "tutorial", "exit");
 			this.openWelcomeWindow();
 		}.bind(this))
 		.oncomplete(function () {
-			ga("send", "event", "tutorial", "complete");
 			this.userSettings.setBoolean("Show welcome", false, true);
 		}.bind(this))
 		.start();

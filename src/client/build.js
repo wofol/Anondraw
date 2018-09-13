@@ -1,7 +1,7 @@
 let _ = require("lodash");
 let fs = require("fs");
 let path = require("path");
-let minify = require("node-minify").minify;
+let compressor = require("node-minify");
 let mustache = require("mustache")
 let exec = require("child_process").execSync;
 
@@ -52,27 +52,27 @@ build();
 
 function build() {
 	lastBuild = Date.now();
-	new minify({
-		type: "gcc",
-		fileIn: "src/scripts/**/*.js",
-		fileOut: "dist/anondraw.min.js",
+	compressor.minify({
+		compressor: "gcc",
+		input: "src/scripts/**/*.js",
+		output: "dist/anondraw.min.js",
 		options: [ "--language_in=ES5" ],
 		callback: function(err, min) {
 			if (err) {
-				console.log("[ERROR] Rebuilding scripts failed", err);
+				//console.log("[ERROR] Rebuilding scripts failed", err);
 				return;
 			}
 			console.log("Scripts rebuilt.");
 		}
 	});
 
-	new minify({
-		type: "yui-css",
-		fileIn: "src/css/*.css",
-		fileOut: "dist/anondraw.min.css",
+	compressor.minify({
+		compressor: "yui-css",
+		input: "src/css/*.css",
+		output: "dist/anondraw.min.css",
 		callback: function(err, min) {
 			if (err) {
-				console.log("[ERROR] Rebuilding styles failed", err);
+				//console.log("[ERROR] Rebuilding styles failed", err);
 				return;
 			}
 			console.log("Styles rebuilt.");

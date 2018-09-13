@@ -1,5 +1,5 @@
 var config = require("../../common/config.js");
-var https = require("https");
+var http = require("http");
 var querystring = require("querystring");
 var kickbancode = config.service.player.password.kickban;
 
@@ -61,7 +61,7 @@ Players.prototype.setName = function setName (uKey, name, callback) {
 Players.prototype.request = function request (method, urlArguments, callback) {
 	if (typeof callback !== "function")	callback = function () {};
 
-	var req = https.request({
+	var req = http.request({
 		hostname: this.server,
 		port: config.service.player.port,
 		method: "GET",

@@ -1,18 +1,18 @@
 require("../common/nice_console_log.js");
 var config = require("../common/config.js");
 
-var https = require("https");
+var http = require("http");
 var drawcode = config.service.image.password.draw;
 
 var Canvas = require("canvas");
 var TiledCanvas = require("./scripts/TiledCanvas.js");
 var fs = require('graceful-fs');
 
-var options = {
+/*var options = {
   key: fs.readFileSync(config.permfolder + '/privkey.pem'),
   cert: fs.readFileSync(config.permfolder + '/cert.pem'),
   ca: fs.readFileSync(config.permfolder + '/chain.pem')
-};
+};*/
 
 var mkdirp = require('mkdirp');
 
@@ -53,7 +53,7 @@ fs.readFile("./images/background.png", function (err, transparentBytes) {
 		return tiledCanvas;
 	}
 
-	var server = https.createServer(options, function (req, res) {
+	var server = http.createServer(function (req, res) {
 		var url = require("url");
 		var parsedUrl = url.parse(req.url, true);
 

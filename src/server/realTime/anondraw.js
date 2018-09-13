@@ -1,19 +1,19 @@
 Error.stackTraceLimit = Infinity;
 require("../common/nice_console_log.js");
 var config = require("../common/config.js");
-var https = require('https');
+var http = require('http');
 var fs = require('fs');
-
+/*
 var options = {
   key: fs.readFileSync(config.permfolder + '/privkey.pem'),
   cert: fs.readFileSync(config.permfolder + '/cert.pem'),
   ca: fs.readFileSync(config.permfolder + '/chain.pem')
-};
+};*/
 
 var port = process.argv[2];
-if (!port) throw "No port provided!";
+if (!port) port = 2999//throw "No port provided!";
 
-var server = https.createServer(options);
+var server = http.createServer();
 server.listen(port);
 
 // Socket library

@@ -921,7 +921,7 @@ Protocol.prototype.bindIO = function bindIO () {
 
 				return;
 			}
-
+/*
 			if (socket.uKey == targetSocket.uKey) {
 				socket.emit("chatmessage", {
 					user: "SERVER",
@@ -937,7 +937,7 @@ Protocol.prototype.bindIO = function bindIO () {
 				});
 				return;
 			}
-
+*/
 			protocol.players.giveReputation(socket.uKey, targetSocket.uKey, function (err) {
 				if (err) {
 					socket.emit("chatmessage", {

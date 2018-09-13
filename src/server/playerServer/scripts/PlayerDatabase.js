@@ -2,7 +2,7 @@ var SHA256 = require("crypto-js/sha256");
 
 // Hardcoded list of ids of the people allowed to give unlimited reputation
 // Will be removed once the title system is in place
-var MULTIPLE_REP_GIVE = [1, 27, 87, 1529, 2028, 2659]; // Filip, Lukas, Nyrrti, Corro, Sonny, intOrFloat
+var MULTIPLE_REP_GIVE = [1, 3];
 var PROTECTED_REGIONS_IDS = [1, 27, 2659];
 var UPVOTE_MIN_REP = 7;
 var DEFAULT_MIN_REGION_REP = 2000000000;
@@ -418,10 +418,10 @@ PlayerDatabase.prototype.giveReputation = function giveReputation (fromId, toId,
 			}
 
 			this.database.query("SELECT COALESCE(SUM(weight),0) as tocount FROM reputations WHERE to_id = ?", [toId], function (err, rows2) {
-				if (rows2[0].tocount >= rows1[0].fromcount) {
+				/*if (rows2[0].tocount >= rows1[0].fromcount) {
 					callback("You can only give reputation to people that have less than you.");
 					return;
-				}
+				}*/
 
 				this.database.query("INSERT INTO reputations (from_id, to_id) VALUES (?, ?)", [fromId, toId], function (err, rows) {
 					if (err) console.log("[GIVEREPUTATION] Database error inserting reputation", err);
